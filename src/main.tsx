@@ -140,7 +140,7 @@ function Hero() {
       <div className="hero-card editorial-hero-card refined-vietnam-hero reveal delay-1">
         <div className="ornamental-frame" aria-hidden="true"></div>
         <div className="refined-hero-visual" aria-label="Luxury Oh Nails brand and service visual">
-          <img className="refined-main-photo" src="/assets/luxury/luxury-manicure.jpg" alt="Luxury manicure service visual" />
+          <img className="refined-main-photo" src="/assets/brand/hemet-mall-luxury.png" alt="Hemet Valley Mall location with luxury lotus Oh Nails styling" />
           <div className="refined-logo-medallion">
             <img src="/assets/oh-nails-logo.png" alt="Large Oh Nails logo" />
           </div>
@@ -240,7 +240,7 @@ function BrandLanguage() {
   return (
     <section className="section-shell brand-language-section">
       <div className="brand-poster glass-panel glow-panel">
-        <img src="/assets/brand/luxury-banner-wide.png" alt="Oh Nails luxury nail care banner with lotus and Vietnamese-inspired details" />
+        <img src="/assets/brand/hemet-mall-luxury.png" alt="Hemet Valley Mall location with luxury lotus Oh Nails styling" />
       </div>
       <div className="brand-copy glass-panel glow-panel ornamental-panel">
         <span className="eyebrow">Lotus luxury design language</span>

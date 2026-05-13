@@ -1243,3 +1243,18 @@ body {
   .refined-logo-medallion { right: 5%; top: 12%; width: 150px; }
   .refined-accent-photo { right: 5%; bottom: 31%; width: 43%; height: 21%; }
 }
+
+/* Hemet Mall edited location image refinement */
+.refined-main-photo[src*='hemet-mall-luxury'] {
+  object-position: center 42%;
+  filter: saturate(1.04) contrast(1.02) brightness(1.02);
+}
+
+.brand-poster img[src*='hemet-mall-luxury'] {
+  width: 100%;
+  height: min(720px, 78vh);
+  object-fit: cover;
+  object-position: center 48%;
+  border-radius: 32px;
+  filter: saturate(1.04) contrast(1.02) brightness(1.02);
+}
