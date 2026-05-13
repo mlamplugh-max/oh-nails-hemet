@@ -66,9 +66,9 @@ export const pricing = [
 ] as const;
 
 export const galleryItems = [
-  { title: 'Luxury Nail Care in Hemet', image: '/assets/brand/lotus-salon-blank-bg.png' },
+  { title: 'Luxury Nail Care in Hemet', image: '/assets/brand/lotus-hands-wide-1.png' },
   { title: 'Oh Nails Brand Look', image: '/assets/brand/facebook-card.png' },
-  { title: 'Vietnamese Lotus Luxury', image: '/assets/brand/lotus-salon-blank-bg.png' },
+  { title: 'Vietnamese Lotus Luxury', image: '/assets/brand/lotus-hands-wide-2.png' },
   { title: 'Luxury Manicures', image: '/assets/luxury/luxury-manicure.jpg' },
   { title: 'Spa Pedicures', image: '/assets/luxury/spa-pedicure.jpg' },
   { title: 'Custom Nail Art', image: '/assets/luxury/nail-art-closeup.jpg' }
