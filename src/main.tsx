@@ -1,4 +1,4 @@
-import React, { FormEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   CalendarDays,
@@ -31,8 +31,6 @@ type AppointmentPayload = {
   consent: boolean;
   company?: string;
 };
-
-type ChatMessage = { role: 'assistant' | 'user'; text: string };
 
 const navItems = [
   ['Home', '#home'],
@@ -69,7 +67,6 @@ function App() {
         <Contact />
       </main>
       <Footer />
-      <ChatWidget />
       <MobileCtas />
     </>
   );
@@ -389,11 +386,11 @@ function ChatCallout() {
   return (
     <section className="section-shell chat-callout">
       <div>
-        <span className="eyebrow"><MessageCircle size={16} /> Oh Nails Assistant</span>
+        <span className="eyebrow"><MessageCircle size={16} /> ClawHire AI Employee</span>
         <h2>Have a quick question?</h2>
-        <p>Ask the chat assistant about services, starting prices, directions, design details, or appointment requests.</p>
+        <p>Use the AI employee chat bubble for services, starting prices, directions, design details, or appointment requests.</p>
       </div>
-      <button className="secondary-button" onClick={() => window.dispatchEvent(new Event('open-oh-chat'))}>Ask the Assistant</button>
+      <button className="secondary-button" onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}>Use the Chat Bubble</button>
     </section>
   );
 }
@@ -474,76 +471,6 @@ function Footer() {
   );
 }
 
-function ChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', text: 'Hi! I’m the Oh Nails Assistant. I can help with services, starting prices, directions, or sending an appointment request. Oh Nails will confirm your appointment time.' }
-  ]);
-
-  React.useEffect(() => {
-    const listener = () => setOpen(true);
-    window.addEventListener('open-oh-chat', listener);
-    return () => window.removeEventListener('open-oh-chat', listener);
-  }, []);
-
-  const quickPrompts = useMemo(() => ['What are your services?', 'How much is a gel manicure?', 'I want to book', 'Where are you located?'], []);
-
-  async function send(text = input) {
-    const value = text.trim();
-    if (!value) return;
-    const next = [...messages, { role: 'user' as const, text: value }];
-    setMessages(next);
-    setInput('');
-    setLoading(true);
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next })
-      });
-      const result = await response.json().catch(() => ({}));
-      setMessages([...next, { role: 'assistant', text: result.reply || fallbackReply(value) }]);
-    } catch {
-      setMessages([...next, { role: 'assistant', text: fallbackReply(value) }]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div className={`chat-widget ${open ? 'open' : ''}`}>
-      {open && (
-        <section className="chat-panel" aria-label="Oh Nails Assistant chat">
-          <header><strong>Oh Nails Assistant</strong><button onClick={() => setOpen(false)} aria-label="Close chat"><X size={18} /></button></header>
-          <div className="chat-messages">
-            {messages.map((msg, index) => <div key={index} className={`bubble ${msg.role}`}>{msg.text}</div>)}
-            {loading && <div className="bubble assistant">Typing...</div>}
-          </div>
-          <div className="quick-prompts">
-            {quickPrompts.map((prompt) => <button key={prompt} onClick={() => send(prompt)}>{prompt}</button>)}
-          </div>
-          <form onSubmit={(e) => { e.preventDefault(); send(); }}>
-            <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about services or booking..." />
-            <button aria-label="Send message"><Send size={16} /></button>
-          </form>
-        </section>
-      )}
-      <button className="chat-toggle" onClick={() => setOpen(!open)} aria-label="Open Oh Nails Assistant">
-        <MessageCircle />
-      </button>
-    </div>
-  );
-}
-
-function fallbackReply(text: string) {
-  const lower = text.toLowerCase();
-  if (lower.includes('book') || lower.includes('appointment')) return 'I can help send an appointment request. Please share your name, phone number, email, desired service, preferred date, preferred time, and any design notes. Oh Nails will confirm your appointment time.';
-  if (lower.includes('price') || lower.includes('cost') || lower.includes('gel')) return 'Starting prices are listed on the pricing guide: classic manicure $25+, gel manicure $40+, classic pedicure $35+, deluxe pedicure $50+, acrylic full set $55+, acrylic fill $40+, and nail art $5+ per nail. Final pricing may vary.';
-  if (lower.includes('direction') || lower.includes('where') || lower.includes('location')) return 'Oh Nails is located in Hemet, CA. The exact address is coming soon. You can use the Directions section to open a Google Maps search.';
-  return 'I can help with manicures, pedicures, acrylic nails, gel nails, nail art, starting prices, directions, or appointment requests. What would you like help with?';
-}
 
 function MobileCtas() {
   const mapsUrl = businessInfo.googleMapsUrl || 'https://www.google.com/maps/search/?api=1&query=Oh%20Nails%20Hemet%20CA';
